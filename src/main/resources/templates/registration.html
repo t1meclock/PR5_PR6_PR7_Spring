@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Регистрация</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        .form-control {
+            display: block;
+            width: 50%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.375rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<div th:if="${#messages}">
+    <p th:text="${message}"></p>
+</div>
+Регистрация нового пользователя
+<form th:action="@{/registration}" method="post">
+    <div><label> Никнейм: <input type="text" class="form-control" name="username"/> </label></div>
+    <div><label> Пароль: <input type="password" class="form-control" name="password"/> </label></div>
+    <div><label> Фамилия: <input type="text" class="form-control" name="surename"/> </label></div>
+    <div><label> Имя: <input type="text" class="form-control" name="name"/> </label></div>
+    <div><label> Отчество: <input type="text" class="form-control" name="patron"/> </label></div>
+    <div><label> Обо мне: <input type="text" class="form-control" name="about_me"/> </label></div>
+    <div><label> Возраст: <input type="number" class="form-control" name="age"/> </label></div>
+    <div><input type="submit" style="border-radius: 12px; border: none; font-size: 16px;
+        margin: 4px 2px; background-color: bisque;" value="Зарегистрироваться"/></div>
+</form>
+</body>
+</html>
