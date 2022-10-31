@@ -1,12 +1,13 @@
 package com.example.demo.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Collection;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Entity
 public class User implements UserDetails {
@@ -109,6 +110,12 @@ public class User implements UserDetails {
 
     //-----------------------------------------------------------------------------------
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Post> posts = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user")
+    public Theme theme;
+
     public String getSurename() {
         return surename;
     }
@@ -157,4 +164,3 @@ public class User implements UserDetails {
         this.contacts = contacts;
     }
 }
-

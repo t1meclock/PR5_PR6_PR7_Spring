@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<h1>Все темы</h1>
+<a class="underline text-blue-600" th:href="'/theme/add'" sec:authorize="isAuthenticated()">Добавить тему</a>
+<div th:each="theme : ${themes}">
+  <div class="max-w-sm rounded overflow-hidden shadow-lg">
+    <div class="px-6 py-4">
+      <div class="font-bold text-xl mb-2" th:text="${theme.name}"/>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -24,7 +24,7 @@
 </style>
 </head>
 <body>
-<form th:action="${'/blog/add'}" method="post">
+<form th:action="${'/blog/add'}" method="post" th:object="${post}">
   <p>Введите название поста: </p>
   <input type="text" class="form-control" name="title" placeholder="Введите название поста">
   <p>Введите анонс поста: </p>
@@ -32,6 +32,25 @@
   <p>Введите текст поста: </p>
   <textarea name="full_text" class="form-control" placeholder="Введите текст поста"></textarea>
   <br>
+
+  <div class="mb-4">
+    <div style="display: flex; flex-direction: row">
+      <label for="name" style="margin-right: 10px" >Имя:</label>
+      <p id='name' th:text="${user.name}" th:value="${user.id}" style="margin: 0px"></p>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2">Темы</label>
+    <div th:each="theme : ${themes}">
+      <input th:name="${'themes[]'}" th:value="${theme.id}"
+
+             type="checkbox"><!--             th:checked="${theme.id != null && #lists.contains(post.themes, theme)}"-->
+      <label th:text="${theme.name}"></label>
+    </div>
+  </div>
+
+
   <button type="submit" style="border-radius: 12px; border: none; font-size: 16px;
   margin: 4px 2px; background-color: bisque;">Добавить пост</button>
 </form>

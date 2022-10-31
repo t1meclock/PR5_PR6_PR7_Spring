@@ -139,6 +139,18 @@
                     <p class="text_box" id="full_text" th:text="${el.full_text}" ></p>
                 </div>
 
+                <div class="box-flex box-margin">
+                    <label class="text_box label__text" for="anons" >Автор поста:</label>
+                    <p class="text_box" id="user" th:text="${el.user.name}" ></p>
+                </div>
+
+                <div class="box-flex box-margin">
+                    <label class="text_box label__text" for="anons" >Темы поста:</label>
+                    <tr id="themes" th:each="theme : ${el.themes}" >
+                        <td th:text="${theme.name}"></td>
+                    </tr>
+                </div>
+
                 <a class="links link-more" th:href="'/blog/' + ${el.id}">Подробнее</a>
             </div>
         </div>

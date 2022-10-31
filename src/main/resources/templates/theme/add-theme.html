@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form th:action="${'/theme/add'}" method="post" th:object="${theme}">
+    <div>
+      <label >Название</label>
+      <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+      <input th:field="*{name}" type="text" name="name" placeholder="Введите название жанра">
+    </div>
+
+    <div>
+      <label >Автор</label>
+      <div style="color: red" th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></div>
+      <select th:field="*{user}" name="author">
+        <option th:each="user : ${users}"
+                th:if="${(theme.user != null && user.id == theme.user.id) || user.theme==null}"
+                th:value="${user.id}"
+                th:text="${user.name}">
+        </option>
+      </select>
+    </div>
+    <button type="submit">Добавить тему</button>
+  </form>
+</body>
+</html>

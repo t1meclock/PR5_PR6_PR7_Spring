@@ -37,6 +37,9 @@ public class BlogController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private ThemeRepository themeRepository;
+
+    @Autowired
     private ContactsRepository contactsRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -48,16 +51,60 @@ public class BlogController {
         return "blog-main";
     }
 
+    public String crntUsNm()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+            return currentUserName;
+        }
+
+        return null;
+    }
+
+//    @GetMapping("/blog/add")
+//    public String blogAdd(Model model) {
+//        return "blog-add";
+//    }
+//
+//    @PostMapping("/blog/add")
+//    public String blogPostAdd(@RequestParam String title,
+//                              @RequestParam String anons,
+//                              @RequestParam String full_text, Model model) {
+//        Post post = new Post(title, anons, full_text);
+//        postRepository.save(post);
+//
+//        return "redirect:/";
+//    }
+
     @GetMapping("/blog/add")
-    public String blogAdd(Model model) {
+    public String blogAdd(Model model)
+    {
+        User user = userRepository.findByUsername(crntUsNm());
+        Iterable<Theme> themes = themeRepository.findAll();
+
+        model.addAttribute("user", user);
+        model.addAttribute("themes", themes);
+
         return "blog-add";
     }
 
     @PostMapping("/blog/add")
-    public String blogPostAdd(@RequestParam String title,
-                              @RequestParam String anons,
-                              @RequestParam String full_text, Model model) {
-        Post post = new Post(title, anons, full_text);
+    public String blogPostAdd(@ModelAttribute("post") @Valid Post post,
+                              BindingResult bindingResult,
+                              Model model) {
+//        if (bindingResult.hasErrors())
+//        {
+//            User user = userRepository.findByUsername(crntUsNm());
+//            Iterable<Theme> themes = themeRepository.findAll();
+//
+//            model.addAttribute("user", user);
+//            model.addAttribute("themes", themes);
+//
+//            return "blog-add";
+//        }
+
+        post.setUser(userRepository.findByUsername(crntUsNm()));
         postRepository.save(post);
 
         return "redirect:/";
@@ -77,17 +124,6 @@ public class BlogController {
         model.addAttribute("accurate_search", accurate_search);
 
         return "blog-filter";
-    }
-
-    public String crntUsNm()
-    {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String currentUserName = authentication.getName();
-            return currentUserName;
-        }
-
-        return null;
     }
 
     @GetMapping("/blog/profile")
